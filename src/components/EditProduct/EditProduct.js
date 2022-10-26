@@ -20,15 +20,27 @@ function EditProduct () {
         status: '', mess: '',
     });
     const [product, setProduct] = useState()
+
+
     const navigate = useNavigate()
     const data = useLocation();
     const id = data.state.id
     const handleChange = (e) => {
-        setProduct({...product,[e.target.name]: e.target.value})
+        setProduct({...product ,[e.target.name]: e.target.value})
     }
     const handleSubmit = async () => {
-        const productEdit = product
-        await axios.put(`http://localhost:3001/products/${id}`, productEdit)
+        let productEdit = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            stock: product.stock,
+            description: product.description,
+        }
+        await axios.put(`http://localhost:3001/products/${id}`, productEdit).then((response) => {
+           console.log(response)
+            navigate('/')
+        })
+
     }
 
     return (
@@ -45,7 +57,7 @@ function EditProduct () {
                         }}
                              onSubmit={handleSubmit}
                         >
-                            <h2 style={{textAlign: 'center'}}>Create a new product</h2>
+                            <h2 style={{textAlign: 'center'}}>Edit a new product</h2>
                             <div style={{textAlign: 'center'}}>
                                 <TextField
                                     label='ID Product'

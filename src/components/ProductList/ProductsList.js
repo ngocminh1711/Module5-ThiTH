@@ -37,6 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ProductsList () {
     const [products , setProducts ] = useState([]);
     const navigate = useNavigate()
+    const [statusDelete, setStatusDelete] = useState(false);
 
     const getProducts = async () => {
         return await axios.get('http://localhost:3001/products')
@@ -44,7 +45,7 @@ function ProductsList () {
     const handleDelete = async (id) => {
 
          await axios.delete(`http://localhost:3001/products/${id}`)
-        setProducts([...products])
+        setStatusDelete(true)
     }
     const handleEdit = async (id) => {
         navigate('/editProduct', { state: { id: id}})
@@ -53,7 +54,9 @@ function ProductsList () {
          getProducts().then((res) =>{
              setProducts(res.data)
          })
-    },[handleDelete])
+    },[statusDelete])
+
+    console.log(products)
     return (
         <TableContainer component={Paper}>
 

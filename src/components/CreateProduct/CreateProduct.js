@@ -37,6 +37,7 @@ function CreateProduct() {
                 }).catch(err => {
                 console.log(err.message);
             })
+        navigate('/')
     }
     return (
         <>
