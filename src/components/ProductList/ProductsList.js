@@ -47,7 +47,7 @@ function ProductsList () {
          await axios.delete(`http://localhost:3001/products/${id}`)
         setStatusDelete(true)
     }
-    const handleEdit = async (id) => {
+    const handleEdit = (id) => {
         navigate('/editProduct', { state: { id: id}})
     }
     useEffect(() => {

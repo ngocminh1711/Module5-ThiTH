@@ -21,25 +21,22 @@ function EditProduct () {
     });
     const [product, setProduct] = useState()
 
-
     const navigate = useNavigate()
     const data = useLocation();
-    const id = data.state.id
+
+    let id = data.state.id
+
     const handleChange = (e) => {
         setProduct({...product ,[e.target.name]: e.target.value})
     }
+
     const handleSubmit = async () => {
-        let productEdit = {
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            stock: product.stock,
-            description: product.description,
-        }
-        await axios.put(`http://localhost:3001/products/${id}`, productEdit).then((response) => {
+        console.log(id)
+        console.log(product)
+        await axios.put(`http://localhost:3001/products/${id}`, product).then((response) => {
            console.log(response)
-            navigate('/')
-        })
+        }).catch((error) => { console.log(error) })
+        navigate('/')
 
     }
 
@@ -59,14 +56,6 @@ function EditProduct () {
                         >
                             <h2 style={{textAlign: 'center'}}>Edit a new product</h2>
                             <div style={{textAlign: 'center'}}>
-                                <TextField
-                                    label='ID Product'
-                                    required
-                                    type='number'
-                                    maxRows={6}
-                                    name="id"
-                                    onChange={handleChange}
-                                />
                                 <TextField
                                     label='Name Product'
                                     required
@@ -114,7 +103,8 @@ function EditProduct () {
                             </div>
                             <div style={{textAlign: 'center'}}>
                                 <Button variant='contained' color='success'
-                                        sx={{marginTop: 1, alignItems: 'center'}} type='submit'
+                                        sx={{marginTop: 1, alignItems: 'center'}} type='button'
+                                        onClick={()=> handleSubmit()}
                                 >
                                     Submit
                                 </Button>
